@@ -130,11 +130,14 @@ class HBNBCommand(cmd.Cmd):
         if match.group(2):
             params = match.group(2).split(" ")
             for p in params:
-                m_param = re.search(r'(\w+)="?(-?\w+(\.\d+)?)"?', p)
-                value = m_param.group(2).replace("_", " ")
-                key = m_param.group(1)
+                param = re.search(r'(\w+)="?(-?\w+(\.\d+)?)"?', p)
+                value = param.group(2).replace("_", " ")
+                key = param.group(1)
                 if key in HBNBCommand.types:
-                    value = HBNBCommand.types[key](value)
+                    try:
+                        value = HBNBCommand.types[key](value)
+                    except ValueError:
+                        continue
                 setattr(new_instance, key, value)
 
         storage.save()
