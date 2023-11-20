@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
                 value = param[1].replace("_", " ")
                 value = value[1:-1]
                 # value = str(value)
-                value = value.replace("\\", "")
+                # value = value.replace("\\", "")
             elif (type(eval(param[1])) == float) or (type(eval(param[1])) == int):
                 value = eval(param[1])
 
