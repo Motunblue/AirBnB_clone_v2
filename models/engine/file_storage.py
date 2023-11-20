@@ -63,4 +63,4 @@ class FileStorage:
 
         key = obj.to_dict()["__class__"] + '.' + obj.id
         if key in self.all():
-            del self.all()[key]
+            del self.__objects[key]
