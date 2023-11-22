@@ -18,16 +18,6 @@ class FileStorage:
             return new_dict
 
         return FileStorage.__objects
-    
-    @property
-    def cities(self, state):
-        """Getter for all cities assocaited with state"""
-        from models.city import City
-        city_list = []
-        for city in self.all(City):
-            if city.state_id == state.id:
-                city_list.append(city)
-        return city_list
 
     def new(self, obj):
         """Adds new object to storage dictionary"""

@@ -203,7 +203,9 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            # del(storage.all()[key]) This would not work for database storage.
+            obj = storage.all()[key]
+            obj.delete()
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -224,11 +226,14 @@ class HBNBCommand(cmd.Cmd):
                 return
             dict_all = storage.all(HBNBCommand.classes[args])
             for k, v in dict_all.items():
-                #if k.split('.')[0] == args: Unnecessay since storage only has args param
+                    if v._sa_instance_state:
+                        del v._sa_instance_state
                     print_list.append(str(v))
         else:
             dict_all = storage.all()
-            for k, v in dict_all:
+            for k, v in dict_all.items():
+                if v._sa_instance_state:
+                        del v._sa_instance_state
                 print_list.append(str(v))
 
         print(print_list)
