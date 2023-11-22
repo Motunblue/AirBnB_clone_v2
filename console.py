@@ -226,14 +226,10 @@ class HBNBCommand(cmd.Cmd):
                 return
             dict_all = storage.all(HBNBCommand.classes[args])
             for k, v in dict_all.items():
-                    if v._sa_instance_state:
-                        del v._sa_instance_state
                     print_list.append(str(v))
         else:
             dict_all = storage.all()
             for k, v in dict_all.items():
-                if v._sa_instance_state:
-                        del v._sa_instance_state
                 print_list.append(str(v))
 
         print(print_list)
