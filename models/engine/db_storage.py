@@ -37,7 +37,7 @@ class DBStorage:
                 k = f"{obj.__class__.__name__}.{obj.id}"
                 dict[k] = obj
         else:
-            cls_list = [State, City, User, Place]
+            cls_list = [State, City, User, Place, Review]
             for c in cls_list:
                 objs =  DBStorage.__session.query(c).all()
                 for obj in objs:
