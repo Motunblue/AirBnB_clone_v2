@@ -60,4 +60,4 @@ class Place(BaseModel, Base):
     def amenities(self, obj):
         """Setter for amenity_ids"""
         if type(obj) == Amenity:
-            self.amenity_ids.append(obj)
+            self.amenity_ids.append(obj.id)
