@@ -133,7 +133,8 @@ class HBNBCommand(cmd.Cmd):
                 value = value[1:-1]
                 # value = str(value)
                 # value = value.replace("\\", "")
-            elif (type(eval(param[1])) == float) or (type(eval(param[1])) == int):
+            elif (type(eval(param[1])) == float) or (type(eval(param[1]))
+                                                     == int):
                 value = eval(param[1])
 
             if value != "":
@@ -218,7 +219,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
         print_list = []
-        
+
         if args:
             args = args.split(' ')[0]  # remove possible trailing args
             if args not in HBNBCommand.classes:
@@ -226,7 +227,7 @@ class HBNBCommand(cmd.Cmd):
                 return
             dict_all = storage.all(HBNBCommand.classes[args])
             for k, v in dict_all.items():
-                    print_list.append(str(v))
+                print_list.append(str(v))
         else:
             dict_all = storage.all()
             for k, v in dict_all.items():
