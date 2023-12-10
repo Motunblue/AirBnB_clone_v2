@@ -1,10 +1,9 @@
 #!/usr/bin/python3
 """Deploy web static page"""
-
-
 from fabric.api import put, env, run
 
 env.hosts = ['18.234.107.108', '18.207.235.223']
+
 
 def do_deploy(archive_path):
     """Deploy archived web static page"""
@@ -18,7 +17,8 @@ def do_deploy(archive_path):
     r = run("mkdir -p /data/web_static/releases/{}/".format(file_name))
     if r.failed:
         return False
-    r = run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/".format(file_name, file_name))
+    r = run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/".format(
+        file_name, file_name))
     if r.failed:
         return False
     r = run("rm /tmp/{}.tgz".format(file_name))
