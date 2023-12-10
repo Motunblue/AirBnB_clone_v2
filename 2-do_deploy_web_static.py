@@ -4,25 +4,24 @@
 
 from fabric.api import put, env, run
 
+env.hosts = ['18.234.107.108', '18.207.235.223']
 
 def do_deploy(archive_path):
     """Deploy archived web static page"""
     if not archive_path:
         return False
 
-    env.hosts = ['18.234.107.108', '18.207.235.223']
-
     file_name = archive_path[archive_path.find('w'):archive_path.find('.')]
-    r = put(archive_path, "/tmp/{}".format(archive_path))
+    r = put(archive_path, "/tmp/{}.tgz".format(file_name))
     if r.failed:
         return False
     r = run("mkdir -p /data/web_static/releases/{}/".format(file_name))
     if r.failed:
         return False
-    r = run("tar -xzf /tmp/{} -C {}/".format(archive_path, file_name))
+    r = run("tar -xzf /tmp/{}.tgz -C /data/web_static/releases/{}/".format(file_name, file_name))
     if r.failed:
         return False
-    r = run("rm /tmp/{}".format(archive_path))
+    r = run("rm /tmp/{}.tgz".format(file_name))
     if r.failed:
         return False
     r = run(f"mv /data/web_static/releases/{file_name}/web_static/* \
