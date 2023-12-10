@@ -27,7 +27,7 @@ def do_deploy(archive_path):
     r = run(f"mv /data/web_static/releases/{file_name}/web_static/* \
         /data/web_static/releases/{file_name}/")
     if r.failed:
-        return False
+        return False    
     r = run(f"rm -rf /data/web_static/releases/{file_name}/web_static")
     if r.failed:
         return False
@@ -38,3 +38,4 @@ def do_deploy(archive_path):
         /data/web_static/current")
     if r.failed:
         return False
+    return True
