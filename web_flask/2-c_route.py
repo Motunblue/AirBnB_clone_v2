@@ -17,6 +17,13 @@ def hbhb():
     return "HBNB"
 
 
+@app.route("/c/<text>", strict_slashes=False)
+def cisfun(text):
+    """Return C with text variable"""
+    text = text.replace("_", " ")
+    return f"C {text}"
+
+
 if __name__ == '__main__':
     """Run"""
     app.run(host='0.0.0.0')
