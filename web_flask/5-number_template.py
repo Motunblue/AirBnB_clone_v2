@@ -32,12 +32,14 @@ def pythoniscool(text="is cool"):
     return f"Python {text}"
 
 
+@app.route('/number/', strict_slashes=False)
 @app.route('/number/<n>', strict_slashes=False)
 def number(n):
     if type(eval(n)) == int:
         return (f'{n} is a number')
 
 
+@app.route('/number_template/', strict_slashes=False)
 @app.route('/number_template/<n>', strict_slashes=False)
 def template(n):
     """Displace html template"""
