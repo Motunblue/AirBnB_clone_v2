@@ -24,18 +24,12 @@ def cisfun(text):
     return f"C {text}"
 
 
-@app.route('/python')
+@app.route('/python', strict_slashes=False)
 @app.route("/python/<text>", strict_slashes=False)
 def pythoniscool(text="is cool"):
     """Return python with text variable"""
     text = text.replace("_", " ")
     return f"Python {text}"
-
-
-@app.route('/python/')
-def python():
-    """Redirect"""
-    return redirect(url_for('pythoniscool'))
 
 
 if __name__ == '__main__':
