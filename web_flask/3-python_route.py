@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Start a flask web server"""
-from flask import Flask
+from flask import Flask, redirect, url_for
 
 app = Flask(__name__)
 
@@ -24,13 +24,18 @@ def cisfun(text):
     return f"C {text}"
 
 
+@app.route('/python')
 @app.route("/python/<text>", strict_slashes=False)
-def pythoniscool(text):
+def pythoniscool(text="is cool"):
     """Return python with text variable"""
-    if not text:
-        return "Python is cool"
     text = text.replace("_", " ")
     return f"Python {text}"
+
+
+@app.route('/python/')
+def python():
+    """Redirect"""
+    return redirect(url_for('pythoniscool'))
 
 
 if __name__ == '__main__':
