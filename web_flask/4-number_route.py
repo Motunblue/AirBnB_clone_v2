@@ -32,11 +32,10 @@ def pythoniscool(text="is cool"):
     return f"Python {text}"
 
 
-@app.route('/number/', strict_slashes=False)
-@app.route('/number/<n>', strict_slashes=False)
+@app.route('/number/<int:n>', strict_slashes=False)
 def number(n):
-    if type(eval(n)) == int:
-        return (f'{n} is a number')
+    """Display n if it's a number"""
+    return (f'{n} is a number')
 
 
 if __name__ == '__main__':
