@@ -1,4 +1,4 @@
 file.json
-__pyc*
+__pycache__
 test.py
 envar.bash
