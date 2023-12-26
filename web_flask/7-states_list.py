@@ -2,7 +2,6 @@
 """Start a flask web server"""
 from flask import Flask, render_template
 from models import storage
-from models.state import State
 
 app = Flask(__name__)
 
@@ -10,11 +9,11 @@ app = Flask(__name__)
 @app.route("/states_list", strict_slashes=False)
 def state_list():
     """Render State list"""
-    return render_template('7-states_list.html', states=storage.all(State))
+    return render_template('7-states_list.html', states=storage.all("State"))
 
 
 @app.teardown_appcontext
-def teardown(exception):
+def teardown(expt):
     """Remove current session"""
     storage.close()
 
