@@ -6,6 +6,17 @@ from sqlalchemy.orm import relationship
 from models.review import Review
 from models import storage
 from models.amenity import Amenity
+from os import getenv
+
+
+place_amenity = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60),
+                                 ForeignKey('places.id'),
+                                 primary_key=True, nullable=False),
+                          Column('amenity_id', String(60),
+                                 ForeignKey('amenities.id'),
+                                 primary_key=True, nullable=False))
+
 
 
 class Place(BaseModel, Base):
@@ -23,41 +34,34 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
 
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60),
-                                 ForeignKey('places.id'),
-                                 primary_key=True, nullable=False),
-                          Column('amenity_id', String(60),
-                                 ForeignKey('amenities.id'),
-                                 primary_key=True, nullable=False))
-
     reviews = relationship("Review", cascade="all, delete-orphan",
                            backref="place")
     amenities = relationship("Amenity", secondary="place_amenity",
                              viewonly=False)
 
-    @property
-    def reviews(self):
-        """Getter attribute that get all reviews of the curent place"""
-        review_list = []
-        review_all = storage.all(Review)
-        for review in review_all.values():
-            if review.place_id == self.id:
-                review_list.append(review)
-        return review_list
+    if getenv("HBNB_TYPE_STORAGE") != "db":
+        @property
+        def reviews(self):
+            """Getter attribute that get all reviews of the curent place"""
+            review_list = []
+            review_all = storage.all(Review)
+            for review in review_all.values():
+                if review.place_id == self.id:
+                    review_list.append(review)
+            return review_list
 
-    @property
-    def amenities(self):
-        """Getter attribute to get amenities from Place"""
-        amenity_list = []
-        amenity_all = storage.all(Amenity)
-        for amenity in amenity_all.values():
-            if amenity.id in self.amenity_ids:
-                amenity_list.append(amenity)
-        return amenity_list
+        @property
+        def amenities(self):
+            """Getter attribute to get amenities from Place"""
+            amenity_list = []
+            amenity_all = storage.all(Amenity)
+            for amenity in amenity_all.values():
+                if amenity.id in self.amenity_ids:
+                    amenity_list.append(amenity)
+            return amenity_list
 
-    @amenities.setter
-    def amenities(self, obj):
-        """Setter for amenity_ids"""
-        if type(obj) == Amenity:
-            self.amenity_ids.append(obj.id)
+        @amenities.setter
+        def amenities(self, obj):
+            """Setter for amenity_ids"""
+            if type(obj) == Amenity:
+                self.amenity_ids.append(obj.id)
