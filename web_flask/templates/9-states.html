@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+        {% if notfound is defined %}
+            <H1>Not found!</H1>
+        {% else %}
+        <H1>States</H1>
+            {% if cities is defined %}
+                <H3>Cities:</H3>
+                <UL>
+                {% for city in cities|sort(attribute="name") %}
+                    <li>{{ city.id }}: <B>{{ city.name }}</B></li>
+                {% endfor %}
+                </UL>
+            {% else %}
+                <UL>
+                {% for state in states.values()|sort(attribute="name") %}
+                    <li>{{ state.id }}: <B>{{ state.name }}</B></li>
+                {% endfor %}
+                </UL>
+            {% endif %}
+        {% endif %}
+    </BODY>
+</HTML>
